@@ -1,0 +1,40 @@
+type: v1/system
+
+node_pools:
+  main:
+    instance_type: t2.large
+    num_instances: 1
+
+components:
+  zookeeper:
+    type: v1/service
+    node_pool: /:main
+    num_instances: 1
+
+    build:
+      type: docker_image
+      repository: confluentinc/cp-zookeeper
+      tag: 5.0.0
+    ports:
+      "2181":
+        protocol: TCP
+    exec:
+      environment:
+        ZOOKEEPER_CLIENT_PORT: 2181
+  kafka:
+    type: v1/service
+    node_pool: /:main
+    num_instances: 1
+
+    build:
+      type: docker_image
+      repository: confluentinc/kafka
+      tag: 5.0.0
+    exec:
+      environment:
+        KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+        KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+        KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    ports:
+      "9092":
+        protocol: TCP
