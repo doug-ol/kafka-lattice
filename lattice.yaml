@@ -1,10 +1,5 @@
 type: v1/system
 
-node_pools:
-  main:
-    instance_type: t2.large
-    num_instances: 1
-
 components:
   zookeeper:
     type: v1/service
