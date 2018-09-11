@@ -32,7 +32,7 @@ components:
 
     build:
       type: docker_image
-      repository: confluentinc/kafka
+      repository: confluentinc/cp-kafka
       tag: 5.0.0
     exec:
       environment:
