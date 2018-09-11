@@ -1,4 +1,13 @@
 type: v1/system
+$parameters:
+  node_pool:
+    type: string
+  num_instances:
+    type: number
+    default: 1
+
+node_pool: ${node_pool}
+num_instances: ${num_instances}
 
 components:
   zookeeper:
