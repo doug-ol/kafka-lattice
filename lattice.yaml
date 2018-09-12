@@ -42,3 +42,23 @@ components:
     ports:
       "9092":
         protocol: TCP
+
+
+  kafka_manager:
+    type: v1/service
+    node_pool: /:main
+    num_instances: 1
+
+    build:
+      type: docker_image
+      repository: sheepkiller/kafka-manager
+      tag: stable
+    exec:
+      environment:
+        ZK_HOSTS: zookeeper:2181
+    ports:
+      "9000":
+        protocol: TCP
+        external_access:
+          public: true
+
