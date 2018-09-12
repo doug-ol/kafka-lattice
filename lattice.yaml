@@ -62,3 +62,43 @@ components:
         external_access:
           public: true
 
+  schema_registry:
+    type: v1/service
+    node_pool: /:main
+    num_instances: 1
+
+    build:
+      type: docker_image
+      repository: confluentinc/cp-schema-registry
+      tag: 5.0.0
+    exec:
+      environment:
+        SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: zookeeper:2181
+        SCHEMA_REGISTRY_HOST_NAME: schema_registry
+        SCHEMA_REGISTRY_LISTENERS: http://0.0.0.0:8081
+    ports:
+      "8081":
+        protocol: TCP
+
+
+  kafka_rest:
+    type: v1/service
+    node_pool: /:main
+    num_instances: 1
+
+    build:
+      type: docker_image
+      repository: confluentinc/cp-kafka-rest
+      tag: 5.0.0
+    exec:
+      environment:
+        KAFKA_REST_ZOOKEEPER: zookeeper:2181
+        KAFKA_REST_LISTENERS: http://0.0.0.0:8082
+        KAFKA_REST_SCHEMA_REGISTRY_URL: http://schema_registry:8081
+        KAFKA_REST_HOST_NAME: kafka_rest
+    ports:
+      "8082":
+        protocol: HTTP
+        external_access:
+          public: true
+
