@@ -58,7 +58,7 @@ components:
         ZK_HOSTS: zookeeper:2181
     ports:
       "9000":
-        protocol: TCP
+        protocol: HTTP
         external_access:
           public: true
 
